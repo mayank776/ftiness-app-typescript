@@ -4,41 +4,40 @@ import Navbar from "./componets/navbar/Navbar";
 import { SelectedPage } from "./shared/type";
 import Home from "./componets/home/Home";
 import Benefits from "./componets/benefits/Benefits";
+import OurClasses from "./componets/ourClasses/OurClasses";
+import Footer from "./componets/footer/Footer";
+import ContactUs from "./componets/contactUs/ContactUs";
 
 function App() {
-  const [selectedPage, setselectedPage] = useState<SelectedPage>(
+  const [selectedPage, setSelectedPage] = useState<SelectedPage>(
     SelectedPage.Home
   );
-  const [isTopOfPage, setisTopOfPage] = useState<boolean>(true);
+  const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY === 0) {
-        setisTopOfPage(true);
-        setselectedPage(SelectedPage.Home);
-      } else {
-        setisTopOfPage(false);
+        setIsTopOfPage(true);
+        setSelectedPage(SelectedPage.Home);
       }
+      if (window.scrollY !== 0) setIsTopOfPage(false);
     };
-
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [window]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div className="app bg-gray-100">
+    <div className="app bg-gray-20">
       <Navbar
         isTopOfPage={isTopOfPage}
         selectedPage={selectedPage}
-        setSelectedPage={setselectedPage}
+        setSelectedPage={setSelectedPage}
       />
-
-      <Home setSelectedPage={setselectedPage} />
-
-      <Benefits setSelectedPage={setselectedPage} />
+      <Home setSelectedPage={setSelectedPage} />
+      <Benefits setSelectedPage={setSelectedPage} />
+      <OurClasses setSelectedPage={setSelectedPage} />
+      <ContactUs setSelectedPage={setSelectedPage} />
+      <Footer />
     </div>
   );
 }
